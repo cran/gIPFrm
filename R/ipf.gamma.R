@@ -22,12 +22,10 @@ function(ModelMatrix, ObsTable, gamma, tol, estimand)
     if(sum(SuffStat > 0) < nr) stop("Not all subset sums are positive. Some model parameters may be non-estimable.");
     
     SingleCells <- single.cells(ModelMatrix);
-    iter <- 0; ## the number of iterations;
     idx  <- 0;
     exponent <- 1;
     while( max(abs(SuffStat_m2 - gamma*SuffStat)) > tol)
     {
-      iter <- iter+1;
       for ( j in 1:nr)  ## for each subset
       {
         for(i in 1:nc) ## look for all cels on the subset
@@ -55,7 +53,6 @@ function(ModelMatrix, ObsTable, gamma, tol, estimand)
                      observed.data = ObsTable,
                      fitted.values = (estimand =="probabilities")*Total*m2 + 
                     (estimand =="intensities")*m2, 
-                     model.parameters = pa,
-                     iterations = iter);   
+                     model.parameters = pa);   
       return(result)
 }

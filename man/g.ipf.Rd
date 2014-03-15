@@ -8,7 +8,7 @@
 parameters under a relational model specified by a model matrix.  
 }
 \usage{
-g.ipf(ModelMatrix, ObsTable, tol, estimand)
+g.ipf(ModelMatrix, ObsTable, tol, estimand, adjustment)
 }
 
 
@@ -21,9 +21,13 @@ g.ipf(ModelMatrix, ObsTable, tol, estimand)
   \item{tol }{tolerance used in stopping criteria.
 }
   \item{estimand }{set to \code{"probabilities"} in the case of multinomial 
-      sampling; set to \code{"intensities"} in the case of Poisson sampling.
+      sampling; set to \code{"intensities"} in the case of Poisson sampling.   
 }
-
+  \item{adjustment }{set to \code{"grid"} if a grid is 
+      used to update the adjustment factor; set to \code{"bisection"} if the bisection method is used to update the 
+      adjustment factor; 
+      set to \code{"none"} if \code{estimand} is \code{"intensities"}.
+}
 }
 
 \value{
@@ -61,12 +65,6 @@ g.ipf(ModelMatrix, ObsTable, tol, estimand)
 
 \author{ Anna Klimova, Tamas Rudas}
 
-\note{
-The authors wish to thank Juraj Medzihorsky for his help 
-with building this package.}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 
 \examples{
 
@@ -78,26 +76,24 @@ A = matrix(c(1, 0, 0, 1, 0, 1, 1,
 
 y = c(46,24,7,15,3,4,1) ## the observed data
 
-g.ipf(A, y, 1e-6, "probabilities")
+g.ipf(A, y, 1e-6, "probabilities", "bisection")
+g.ipf(A, y, 1e-4, "probabilities", "grid")
 
-### pneumonia infection in calves, see Agresti(1990):
-
-A=matrix(c(2,1,0,0,1,1), 2,3,byrow=TRUE) ## the model matrix
-
-y=c(30,63,63)  ## the observed data
-
-g.ipf(A,y, 1e-6, "probabilities")
 
 
 ### Bait study in swimming crabs, see Kawamura at al. (1995) :  
 
-A  <- matrix(c(1,1,0,1,0,1), 2,3,byrow=TRUE) ## the model matrix
+A = matrix(c(1,1,0,1,0,1), 2,3,byrow=TRUE) ## the model matrix
 
-y1 <- c(36,2,11)  ## the observed data for Charybdis japonica
-y2 <- c(71,3,44)  ## the observed data for Portunuspelagicus 
+y1 = c(36,2,11)  ## the observed data for Charybdis japonica
+y2 = c(71,3,44)  ## the observed data for Portunuspelagicus 
 
-g.ipf(A, y1, 1e-6, "intensities")
-g.ipf(A, y2, 1e-6, "intensities")
+## If the model is for intensities, the adjustemnt factor is equal to one;
+## the adjustment parameter is redundant.
+
+g.ipf(A, y1, 1e-6, "intensities", "none")
+g.ipf(A, y2, 1e-6, "intensities", "none")
+
 
 
 }

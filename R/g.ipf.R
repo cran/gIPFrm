@@ -1,5 +1,5 @@
 g.ipf <-
-function(ModelMatrix, ObsTable, tol, estimand)
+function(ModelMatrix, ObsTable, tol, estimand, adjustment)
 {
   nc <- ncol(ModelMatrix);
   nr <- nrow(ModelMatrix);
@@ -9,6 +9,10 @@ function(ModelMatrix, ObsTable, tol, estimand)
      stop("Dimensions of the model matrix and the data vector do not match");
   est <- (estimand == "probabilities") + (estimand == "intensities");
   if( est != 1) stop("The estimand is not specified correctly.")
+  adj <- (adjustment == "grid") + (adjustment == "bisection") + 
+         (adjustment == "none");
+  if( adj != 1) stop("The adjustment method is not specified correctly.")
+
   mleTable <- NULL;
   F <- NULL;
   iter <- 0;
@@ -17,12 +21,10 @@ function(ModelMatrix, ObsTable, tol, estimand)
      F <- ipf.gamma(ModelMatrix, ObsTable, 1, tol, "intensities");
      mleTable <- round(F$fitted.values,2);
      model.parameters <- round(F$model.parameters,2);
-     iter <- F$iterations;
-   }  else   {      
+     }  else   {      
      F <- ipf.gamma(ModelMatrix, ObsTable, 1, tol, "probabilities")
-     p <- F$fitted.values;
+     p <- F$fitted.values; 
      model.parameters <- F$parameters;
-   #  iter <- F$iterations;
      p.sum <- sum(p); 
      obs.sum <- sum(ObsTable);
      Total <- p.sum/obs.sum;
@@ -30,37 +32,27 @@ function(ModelMatrix, ObsTable, tol, estimand)
      if (abs(Total - 1) > tol)
      { 
            b <- suff.stat(ModelMatrix, ObsTable/obs.sum);
-           gamma.one <- 1/(sum(b));
-           gamma.two <- min(1/b);
-           gamma.mid <- (gamma.one+gamma.two)/2;
-           F.gamma.mid <- ipf.gamma(ModelMatrix, ObsTable, gamma.mid, tol, "probabilities")
-           p.mid <- F.gamma.mid$fitted.values;
-           #p.two <- F.gamma.two$fitted.values;
-           while(abs(sum(p.mid)/obs.sum -1)> tol)
+           
+           gamma.left <- 1/(sum(b));
+           gamma.right <- min(1/b); 
+           if( adjustment == "grid")
            {
-               F.gamma.two <- ipf.gamma(ModelMatrix, ObsTable, gamma.two, tol, "probabilities")
-               p.two <- F.gamma.two$fitted.values;
+               UpdateGamma <-  grid.update(ModelMatrix, ObsTable, tol)
+                                
+           }
+           else
+           {
+               UpdateGamma <- bisection.update(ModelMatrix, ObsTable, tol) 
+           }
 
-               if( sign(sum(p.mid)/obs.sum -1) == sign(sum(p.two)/obs.sum -1))
-               {
-                   gamma.two <- gamma.mid;
-               }   else { gamma.one <- gamma.mid };
-
-               gamma.mid <- (gamma.one + gamma.two)/2;
-               F.gamma.mid <- ipf.gamma(ModelMatrix, ObsTable, gamma.mid, tol, "probabilities")
-               p.mid <- F.gamma.mid$fitted.values;
-               
-               
-            }
-                
-         
+     
+          
              
-           F <- F.gamma.mid;
-           gamma.hat <- gamma.mid
+           F <- UpdateGamma$model.tilde;
+           gamma.hat <- UpdateGamma$gamma.tilde;  
          }
         model.parameters <- F$model.parameters; 
         mleTable <- round(F$fitted.values,4);
-       # gamma.hat <- gamma.mid
       }
       chisqv <-  sum( (ObsTable-mleTable)^2/mleTable);
       LLratio <- 0;
@@ -120,3 +112,4 @@ function(ModelMatrix, ObsTable, tol, estimand)
       }
    return(result)
 }
+

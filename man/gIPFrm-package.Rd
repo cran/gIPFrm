@@ -44,11 +44,14 @@ Anna Klimova <aklimova25@gmail.com>
 }
 
 \note{
+Tamas Rudas was supported in part by Grant K-106154 
+from the Hungarian National Scientific Research Fund (OTKA).
 The authors wish to thank Juraj Medzihorsky for his help 
 with building this package.
 }
 
 \examples{
+
 ### Multiplicative model from Aitchison and Silvey (1960)
 
 A = matrix(c(1, 0, 0, 1, 0, 1, 1, 
@@ -57,6 +60,7 @@ A = matrix(c(1, 0, 0, 1, 0, 1, 1,
 
 y = c(46,24,7,15,3,4,1) ## the observed data
 
-g.ipf(A, y, 1e-6, "probabilities")
+g.ipf(A, y, 1e-4, "probabilities", "grid")
+g.ipf(A, y, 1e-6, "probabilities", "bisection")
 
 }

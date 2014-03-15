@@ -38,7 +38,6 @@ ipf.gamma(ModelMatrix, ObsTable, gamma, tol, estimand)
   \item{observed.data }{the vector of observed cell frequencies.}
   \item{fitted.values }{the estimated cell frequencies.}
   \item{model.parameters }{the estimated model parameters on the multiplicative scale.}
-  \item{iterations }{the number of iterations until convergence.}
 }
 \references{
 { A.Klimova, T.Rudas, A.Dobra,
@@ -52,10 +51,7 @@ ipf.gamma(ModelMatrix, ObsTable, gamma, tol, estimand)
  Anna Klimova, Tamas Rudas 
 }
 
-\note{
-The authors wish to thank Juraj Medzihorsky for his help
-with building this package.
-}
+
 
 
 \examples{
@@ -67,7 +63,7 @@ A = matrix(c( 1,1,0,0,
               1,0,1,0,
               0,1,0,1), byrow=TRUE, nrow=4) ## the model matrix
 
-y=c(1,2,3,4)  ## the observed data
+y = c(1,2,3,4)  ## the observed data
 
 ipf.gamma(A, y, 1, 1e-6, "intensities")   ## Adjustment factor is set to 1 
 
