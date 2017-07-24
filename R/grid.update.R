@@ -1,4 +1,5 @@
-grid.update <- function(ModelMx, ObsTbl, tolerance)
+grid.update <-
+function(ModelMx, ObsTbl, tolerance)
 {
    
    T <- 1;

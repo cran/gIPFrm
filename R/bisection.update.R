@@ -1,4 +1,5 @@
-bisection.update <- function(ModelMx, ObsTbl, tolerance)
+bisection.update <-
+function(ModelMx, ObsTbl, tolerance)
 {
    obs.s <- sum(ObsTbl);
    b <- suff.stat(ModelMx, ObsTbl/obs.s);

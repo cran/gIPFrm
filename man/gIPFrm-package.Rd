@@ -12,8 +12,8 @@ Generalized Iterative Proportional Fitting for Relational Models
 \tabular{ll}{
 Package: \tab gIPFrm\cr
 Type: \tab Package\cr
-Version: \tab 1.1\cr
-Date: \tab 2013-03-21\cr
+Version: \tab 3.1\cr
+Date: \tab 2017-07-21\cr
 License: \tab GPL (>= 2)\cr
 }
 The iterative proportional fitting procedure is called by the function 
@@ -28,7 +28,12 @@ Anna Klimova <aklimova25@gmail.com>
 \references{
 {A.Klimova, T.Rudas, A.Dobra,
      Relational models for contingency tables. 
-     J. Multivariate Anal., 104, 159--173.} 
+     J. Multivariate Anal., 2012, 104, 159--173.} 
+
+{A.Klimova, T.Rudas, 
+     Iterative proportional scaling for curved exponential families. 
+     Scand. J. Statist., 2015, 42, 832--847.} 
+
 
 {A. Klimova, Coordinate-Free Exponential Families on Contingency Tables. PhD thesis. Advisers: Tamas Rudas and Thomas Richardson.}
 

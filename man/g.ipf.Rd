@@ -41,14 +41,20 @@ g.ipf(ModelMatrix, ObsTable, tol, estimand, adjustment)
   \item{degrees.of.freedom }{the degrees of freedom of the relational model.}
   \item{chisq.statistic }{Pearson's chi-squared statistic.}
   \item{p.value.chisq }{the p-value, based on Pearson's chi-squared statistic.}
-  \item{log.likelihood.ratio.statistic }{the log-likelihood ratio statistic.}
-  \item{p.value.log.likelihood.ratio }{the p-value, based on log-likelihood ratio statistic.}
+  \item{log.likelihood.ratio.statistic }{the log likelihood ratio statistic.}
+  \item{p.value.log.likelihood.ratio.statistic }{the p-value, based on the log likelihood ratio statistic.}
+  \item{Bregman.statistic }{the Bregman statistic.}
+  \item{p.value.Bregman.statistic }{the p-value, based on the Bregman statistic.}
 }
 
 \references{
 {A.Klimova, T.Rudas, A.Dobra,
      Relational models for contingency tables. 
      J. Multivariate Anal., 2012, 104, 159--173.} 
+
+{A.Klimova, T.Rudas, 
+     Iterative proportional scaling for curved exponential families. 
+     Scand. J. Statist., 2015, 42, 832--847.} 
 
 {A. Klimova, Coordinate-Free Exponential Families on Contingency Tables. PhD thesis. Advisers: Tamas Rudas and Thomas Richardson.}
 

@@ -44,6 +44,10 @@ ipf.gamma(ModelMatrix, ObsTable, gamma, tol, estimand)
      Relational models for contingency tables. 
      J. Multivariate Anal., 2012, 104, 159--173.}
 
+{A.Klimova, T.Rudas, 
+     Iterative proportional scaling for curved exponential families. 
+     Scand. J. Statist., 2015, 42, 832--847.} 
+
 {A. Klimova, Coordinate-Free Exponential Families on Contingency Tables. PhD thesis. Advisers: Tamas Rudas and Thomas Richardson.}
 }
 
